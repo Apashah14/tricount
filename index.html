@@ -330,6 +330,113 @@
     }
 
     /* ===================== FRAME SLEEVE & STATIC FOOTERS ===================== */
+
+/* FOOTER CTA SECTION */
+
+.footer-cta {
+  background: #2c2c2c;
+  color: #f5f2eb;
+  padding: 150px 60px 140px;
+  text-align: center;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.footer-cta h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(55px, 6vw, 92px);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -2px;
+  margin: 0 auto 35px;
+  max-width: 1400px;
+}
+
+.footer-cta h2 em {
+  color: #5e96c4;
+  font-style: italic;
+  font-weight: 300;
+}
+
+
+.footer-cta p {
+  font-family: 'Cormorant Garamond', serif;
+  color: #777;
+  font-size: 20px;
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto 55px;
+}
+
+
+/* BUTTON AREA */
+
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+}
+
+.cta-btn {
+  width: 315px;
+  height: 58px;
+
+  background: #5e96c4;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+
+  border-radius: 50px;
+
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+
+  text-decoration: none;
+
+  transition: .3s ease;
+}
+
+
+.cta-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+
+.cta-btn:hover {
+  transform: translateY(-4px);
+  opacity: .9;
+}
+
+
+
+/* BOTTOM FOOTER */
+
+.footer-bottom {
+
+  background:#2c2c2c;
+
+  border-top:1px solid rgba(255,255,255,.08);
+
+  padding:25px 60px;
+
+  display:flex;
+  justify-content:space-between;
+
+  color:#777;
+
+  font-family:Arial,sans-serif;
+
+  font-size:13px;
+
+  letter-spacing:1px;
+
+}
     .screen {
       background: var(--surface);
       border: 1px solid rgba(255, 255, 255, .06);
@@ -987,10 +1094,48 @@
     </section>
   </main>
 
-  <!-- RECONCILED ACCREDITATIONS -->
-  <footer class="container footer-note">
-    <p>UX/UI case study — Tricount iOS feature enhancement &nbsp;·&nbsp; Personal project, 2025–2026.</p>
-  </footer>
+  <section class="footer-cta">
+
+<h2>
+Crafting premium <em>digital experiences</em>
+</h2>
+
+<p>
+Interested in collaborating on your next design project? Let's create something exceptional together.
+</p>
+
+
+<div class="cta-buttons">
+
+<a href="mailto:pashahafttani@gmail.com" class="cta-btn">
+GET IN TOUCH
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+stroke="currentColor" stroke-width="2">
+<path d="M5 12h14m-7-7 7 7-7 7"/>
+</svg>
+</a>
+
+
+<a href="https://www.behance.net/amirpasha-hafttani" class="cta-btn">
+BEHANCE
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+stroke="currentColor" stroke-width="2">
+<path d="M5 12h14m-7-7 7 7-7 7"/>
+</svg>
+</a>
+
+</div>
+
+</section>
+
+
+<div class="footer-bottom">
+
+<span>© 2026 — Tricount UX Case Study</span>
+
+<span>Designed with care in Figma</span>
+
+</div>
 
   <!-- ===================== INTERACTIVE SYSTEM LOGIC ===================== -->
   <script>
