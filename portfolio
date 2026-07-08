@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tricount Redesign — UX/UI Case Study</title>
+
+  <!-- Google Fonts import for premium typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  
+  <style>
+    
+    /* ===================== CSS DESIGN SYSTEMS ===================== */
+    :root {
+      --bg: #edf8ff;
+      --surface: #0b0b0b;
+      --border: #2a3d4d31;
+      --text: #303030;
+      --muted: #555555;
+      --faint: #2a3d4d;
+      --accent: #6395c1;
+      --max: 1280px;
+      --radius: 22px;
+      --gutter-x: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: calc(100% - 126px);
+      margin: 0 auto;
+    }
+
+    /* ===================== FIXED NAVBAR ===================== */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22.5px 60px;
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: #f5f3ef;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #f5f3ef;
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      opacity: 1;
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 44px;
+      height: 44px;
+      position: relative;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 120;
+    }
+
+    .menu-toggle span {
+      position: absolute;
+      left: 10px;
+      width: 24px;
+      height: 1.5px;
+      background: #f5f3ef;
+      transition: transform 0.3s ease, opacity 0.3s ease, top 0.3s ease;
+    }
+
+    .menu-toggle span:nth-child(1) { top: 14px; }
+    .menu-toggle span:nth-child(2) { top: 21px; }
+    .menu-toggle span:nth-child(3) { top: 28px; }
+
+    .menu-toggle.active span:nth-child(1) {
+      top: 21px;
+      transform: rotate(45deg);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+      top: 21px;
+      transform: rotate(-45deg);
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 62px;
+      left: 0;
+      right: 0;
+      background: rgba(10, 10, 10, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 24px 30px 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-12px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      z-index: 99;
+    }
+
+    .mobile-menu a {
+      color: #f5f3ef;
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.8;
+      transition: opacity 0.2s ease;
+    }
+
+    .mobile-menu a:hover {
+      opacity: 1;
+    }
+
+    .mobile-menu.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    
+    
+
+    /* ===================== TRICOUNT PORTFOLIO GRAPHICS ===================== */
+    .section {
+      padding: 84px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .eyebrow {
+      font-size: .72rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+    }
+
+    .hero {
+      padding: 154px 0 88px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 56px;
+      align-items: start;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 500;
+      line-height: .98;
+    }
+
+    h1 {
+      font-size: clamp(3.2rem, 4.6vw, 4.6vw);
+      max-width: 30ch;
+      margin-bottom: 28px;
+    }
+
+    h2 {
+      font-size: clamp(2.3rem, 4vw, 4rem);
+      margin-bottom: 18px;
+    }
+
+    h3 {
+      font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+      margin-bottom: 12px;
+    }
+
+    .hero p, .copy p, .card p {
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    .tag {
+      border: 1px solid var(--border);
+      color: var(--faint);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: .72rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .stats {
+      margin-top: 64px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .stat {
+      border-left: 1px solid var(--border);
+      padding-left: 24px;
+    }
+
+    .stat strong {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3vw, 3.2rem);
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .stat span {
+      color: var(--faint);
+      font-size: .86rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: .95fr 1.05fr;
+      gap: 56px;
+      align-items: start;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, .025), rgba(255, 255, 255, .01));
+      background-color: rgba(10, 10, 10, 0.03);
+      border: 1px solid rgba(0, 0, 0, .06);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+
+    .dark-card {
+      background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, .06);
+      color: #f5f3ef;
+    }
+
+    .card ul {
+      list-style: none;
+      margin-top: 14px;
+      display: grid;
+      gap: 10px;
+      color: var(--muted);
+    }
+
+    .card li::before {
+      content: '— ';
+      color: var(--accent);
+    }
+
+    /* ===================== FRAME SLEEVE & STATIC FOOTERS ===================== */
+    .screen {
+      background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, .06);
+      border-radius: 24px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .screen-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, .05);
+      font-size: .74rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(245, 243, 239, 0.5);
+    }
+
+    .screen img {
+      width: 100%;
+      max-width: 260px;
+      height: 520px;
+      object-fit: contain;
+      margin: 0 auto;
+      background: transparent;
+      display: block;
+      flex-grow: 1;
+    }
+
+    .caption {
+      padding: 12px 16px 18px;
+      color: rgba(245, 243, 239, 0.75);
+      font-size: .94rem;
+      border-top: 1px solid rgba(255, 255, 255, .05);
+      margin-top: auto;
+    }
+
+    .highlight {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      margin-top: 28px;
+    }
+
+    .process-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .process-item {
+      border-top: 1px solid rgba(0, 0, 0, .06);
+      padding-top: 16px;
+    }
+
+    .process-item strong {
+      display: block;
+      color: var(--text);
+      margin-bottom: 6px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      font-size: .88rem;
+    }
+
+    .footer-note {
+      color: var(--faint);
+      font-size: .92rem;
+      border-top: 1px solid var(--border);
+      padding: 32px 0 64px;
+    }
+
+    /* ===================== IMMERSIVE COVER HERO ===================== */
+    .cover-hero {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #0a0a0a;
+      color: #f5f3ef;
+    }
+    
+    .cover-hero-bg {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url(image/Frame\ 29.png);
+      background-size: cover;
+      background-position: center;
+      opacity: 1;
+      z-index: 1;
+    }
+    
+    .cover-hero-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(180deg, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.85) 100%);
+      z-index: 2;
+    }
+    
+    .cover-hero-content {
+      position: relative;
+      z-index: 3;
+      width: calc(100% - 126px); /* Perfectly aligns with your custom .container width */
+      max-width: var(--max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      align-items: center;
+      padding-top: 80px;
+    }
+    .cover-hero-left {
+  margin-left: -32px; /* 👈 This magic negative number pulls the text slightly to the left! */
+}
+    
+    .cover-hero-eyebrow {
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 0.22  em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+    
+    .cover-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 7.5vw, 6rem);
+      line-height: 0.95;
+      font-weight: 300;
+      color: #efeff5;
+      letter-spacing: -0.01em;
+      margin-bottom: 32px;
+    }
+    
+    .italic-accent {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 400;
+      color: #6395c1; /* Warm sand/gold hue exactly like Mehriz */
+    }
+    
+    .cover-desc {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.05rem;
+      line-height: 1.65;
+      color: rgba(245, 243, 239, 0.75);
+      max-width: 500px;
+      font-weight: 300;
+    }
+    
+    .cover-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      justify-self: end;
+      align-self: end;
+      margin-bottom: 24px;
+      text-align: right;
+    }
+    
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    
+    .meta-label {
+      font-size: 10px;
+      color: rgba(245, 243, 239, 0.4);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    
+    .meta-value {
+      font-size: 14px;
+      color: rgba(245, 243, 239, 0.95);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+    
+    .cover-scroll {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      color: rgba(245, 243, 239, 0.45);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      z-index: 4;
+    }
+    
+    .scroll-line {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(180deg, rgba(245, 243, 239, 0.45) 0%, rgba(245, 243, 239, 0) 100%);
+    }
+    /* Container to fix it at the bottom-center of the screen */
+.cover-scroll {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: rgba(245, 243, 239, 0.45);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  font-family: 'DM Sans', sans-serif;
+  z-index: 4;
+}
+
+/* Base track line (light background channel) */
+.scroll-line {
+  width: 1.5px;
+  height: 60px;
+  background: rgba(99, 149, 193, 0.15); /* Soft background blue tint */
+  position: relative;
+  overflow: hidden;
+  border-radius: 1px;
+}
+
+/* Flowing active blue pulse animation block */
+.scroll-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 30px;
+  background: linear-gradient(180deg, rgba(99, 149, 193, 0) 0%, #6395c1 50%, rgba(99, 149, 193, 0) 100%);
+  animation: scrollLineFlow 2.2s infinite ease-in-out;
+}
+
+/* Loop timing mechanism */
+@keyframes scrollLineFlow {
+  0% {
+    transform: translateY(-30px);
+  }
+  80%, 100% {
+    transform: translateY(60px);
+  }
+}
+
+    /* ===================== PREMIUM MEHRIZ CURSOR ===================== */
+    .cursor-dot,
+    .cursor-ring {
+      position: fixed;
+      top: 0;
+      left: 0;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      will-change: transform;
+      opacity: 0;
+      transition:
+        opacity .3s ease,
+        width .4s cubic-bezier(.25, .46, .45, .94),
+        height .4s cubic-bezier(.25, .46, .45, .94),
+        margin .4s cubic-bezier(.25, .46, .45, .94),
+        background-color .3s ease,
+        border-color .3s ease;
+    }
+
+    .cursor-dot {
+      width: 9px;
+      height: 9px;
+      background: #000000;
+      margin-left: -4.5px;
+      margin-top: -4.5px;
+    }
+
+    .cursor-ring {
+      width: 36px;
+      height: 36px;
+      border: 1.5px solid #000000;
+      margin-left: -18px;
+      margin-top: -18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Desktop Interactive Cursor Settings */
+    body.cursor-ready {
+      cursor: none;
+    }
+
+    body.cursor-ready * {
+      cursor: none !important;
+    }
+
+    body.cursor-ready .nav-links a,
+    body.cursor-ready button {
+      cursor: pointer !important;
+    }
+
+    body.cursor-ready .cursor-dot,
+    body.cursor-ready .cursor-ring {
+      opacity: 1;
+    }
+
+    body.cursor-hover .cursor-dot {
+      width: 18px;
+      height: 18px;
+      margin-left: -9px;
+      margin-top: -9px;
+    }
+
+    /* ===================== RESPONSIVE SYSTEM ===================== */
+    @media (max-width: 980px) {
+      .hero-grid, .two-col, .grid-3, .grid-2, .feature-grid {
+        grid-template-columns: 1fr;
+      }
+      h1 { max-width: none; }
+    }
+
+    @media (max-width: 1024px) {
+      nav {
+        padding: 16px var(--gutter-x);
+      }
+      .container { width: min(calc(100% - 48px));}
+      .nav-links {
+        display: none;
+      }
+      .menu-toggle {
+        display: block;
+      }
+      .mobile-menu {
+        top: 58px;
+        padding: 20px 20px 24px;
+      }
+      /* Change (max-width: 900px) to (max-width: 1024px) */
+@media (max-width: 1024px) {
+  .cover-hero-content {
+    grid-template-columns: 1fr;
+    align-items: center;
+    padding-bottom: 100px;
+  }
+  .cover-hero-left {
+    margin-left: -42px; /* Reset left shift on tablet/mobile screens */
+  }
+  .cover-meta {
+    justify-self: start;
+    align-self: start;
+    margin-left: -42px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    flex-direction: row;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+}
+
+    @media (max-width: 640px) {
+      .container { width: min(calc(100% - 48px)); }
+      .hero { padding: 120px 0 64px; }
+      .section { padding: 58px 0; }
+      h1 { font-size: clamp(3.2rem, 4.6vw, 4.6vw); line-height: 1.02; }
+      h2 { font-size: clamp(2.3rem, 4vw, 4rem); }
+      .stats {grid-template-columns: 1fr; gap: 12px; }
+      .stat {border-left: none;
+        border-top: 1px solid var(--border);
+        padding-left: 0;
+        padding-top: 16px;
+      }
+      .stat:first-of-type {
+        border-top: none;
+        padding-top: 0;
+      }
+      .stat strong { font-size: 2rem; }
+      .screen img { max-width: 220px; height: 440px; }
+      .card, .caption { padding-left: 18px; padding-right: 18px; }
+    }
+    
+  </style>
+</head>
+<body>
+
+  <!-- Custom Cursor Visualizers -->
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+
+  <!-- FIXED HEAD NAVIGATION BAR -->
+  <nav>
+    <a class="nav-logo" href="#top">Tricount</a>
+    <ul class="nav-links">
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#screens">Screens</a></li>
+      <li><a href="#features">Design System</a></li>
+      <li><a href="#process">Process</a></li>
+    </ul>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Collapsible Menu Sheet -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#overview">Overview</a>
+    <a href="#screens">Screens</a>
+    <a href="#features">Design System</a>
+    <a href="#process">Process</a>
+  </div>
+
+  <main id="top">
+    <!-- NEW IMMERSIVE COVER HERO SECTION -->
+    <section class="cover-hero" id="cover">
+      <div class="cover-hero-bg"></div>
+      <div class="cover-hero-overlay"></div>
+      <div class="cover-hero-content">
+        <div class="cover-hero-left">
+          <span class="cover-hero-eyebrow">UX / UI Case Study &mdash; Expense Sharing Redesign</span>
+          <h1 class="cover-title">
+            Tricount <br />
+            <span class="italic-accent">Redesign</span>
+          </h1>
+          <p class="cover-desc">
+            An iOS feature enhancement focused on group travel spending and proactive budget tracking &mdash; bringing elegant financial visibility and structure to shared memories.
+          </p>
+        </div>
+        
+        <div class="cover-meta">
+          <div class="meta-item">
+            <span class="meta-label">Role</span>
+            <strong class="meta-value">UI/UX Designer</strong>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Platform</span>
+            <strong class="meta-value">iOS App</strong>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Year</span>
+            <strong class="meta-value">2025&ndash;2026</strong>
+          </div>
+        </div>
+      </div>
+      
+      <div class="cover-scroll">
+        <span class="scroll-text">SCROLL</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: HERO OVERVIEW -->
+    <section class="hero container" id="overview">
+      <div class="eyebrow">01 — Project overview</div>
+      <div class="hero-grid">
+        <div>
+          <h1>Improving shared spending with <span class="highlight">smarter budget visibility</span></h1>
+          <div class="tag-row">
+            <span class="tag">iOS redesign</span>
+            <span class="tag">Expense sharing</span>
+            <span class="tag">UX/UI</span>
+            <span class="tag">Figma</span>
+            <span class="tag">Product thinking</span>
+          </div>
+        </div>
+        <div class="hero-copy copy">
+          <p>This project is a focused Tricount iOS feature enhancement rather than a full product redesign. I kept the original app structure and introduced a spend limit feature with a supporting summary section to help users understand how much they have spent, how much is left, and how their expenses evolve over time.</p>
+          <br />
+          <p>The concept was based on review analysis, gap analysis, and competitor observation. The goal was to improve budget awareness without disrupting Tricount's existing shared-expense flow.</p>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <strong>2</strong>
+          <span>New features</span>
+        </div>
+        <div class="stat">
+          <strong>10</strong>
+          <span>Portfolio frames</span>
+        </div>
+        <div class="stat">
+          <strong>1</strong>
+          <span>Focused UX enhancement</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: THE CHALLENGE -->
+    <section class="section" id="overview">
+      <div class="container two-col">
+        <div>
+          <div class="eyebrow">02 — Challenge</div>
+          <h2>A useful expense app, but limited budget feedback</h2>
+        </div>
+        <div class="copy">
+          <p>Tricount already helps users split expenses and understand balances, but the experience can do more to support spending awareness during a trip or shared activity. Users can log expenses easily, yet they may still need extra mental effort to understand whether they are staying within a planned budget.</p>
+          <br />
+          <p>Instead of redesigning the whole app, I focused on one clear product opportunity: adding a spend limit and pairing it with a concise summary that makes budget status visible at a glance.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: KEY BRAND SCREENS -->
+    <section class="section" id="screens">
+      <div class="container">
+        <div class="eyebrow">03 — Key screens</div>
+        <h2>Core flow and redesigned moments</h2>
+
+        <!-- Top Series: Frames 1 - 3 -->
+        <div class="grid-3" style="margin-top: 32px;">
+          <article class="screen">
+            <div class="screen-head"><span>Frame 1</span><span>Overview</span></div>
+            <img src="image/1.pdf" alt="Tricount frame 1" loading="lazy">
+            <p class="caption">Existing tricount list and category entry point.</p>
+          </article>
+
+          <article class="screen">
+            <div class="screen-head"><span>Frame 2</span><span>Add flow</span></div>
+            <img src="image/2.pdf" alt="Tricount frame 2" loading="lazy">
+            <p class="caption">The add tricount flow remains familiar and lightweight.</p>
+          </article>
+
+          <article class="screen">
+            <div class="screen-head"><span>Frame 3</span><span>Timeline</span></div>
+            <img src="image/3.pdf" alt="Tricount frame 3" loading="lazy">
+            <p class="caption">The expense feed stays unchanged in structure to preserve the original experience.</p>
+          </article>
+        </div>
+
+        <!-- Base Series: Frames 4 - 6 -->
+        <div class="grid-3" style="margin-top: 20px;">
+          <article class="screen">
+            <div class="screen-head"><span>Frame 4</span><span>List view</span></div>
+            <img src="image/4.pdf" alt="Tricount frame 4" loading="lazy">
+            <p class="caption">Original navigation and list behavior are intentionally preserved.</p>
+          </article>
+
+          <article class="screen">
+            <div class="screen-head"><span>Frame 5</span><span>Spend limit</span></div>
+            <img src="image/5.pdf" alt="Tricount frame 5" loading="lazy">
+            <p class="caption">A spend limit field is added during creation to make budgeting part of setup.</p>
+          </article>
+
+          <article class="screen">
+            <div class="screen-head"><span>Frame 6</span><span>Filled state</span></div>
+            <img src="image/6.pdf" alt="Tricount frame 6" loading="lazy">
+            <p class="caption">The filled form shows how the new budget input fits naturally into the existing flow.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: ADDED FEATURES AND SPECS -->
+    <section class="section" id="features">
+      <div class="container">
+        <div class="eyebrow">04 — Added features</div>
+        <h2>Two small additions with a bigger planning benefit</h2>
+
+        <div class="feature-grid">
+          <div class="card">
+            <h3>Spend limit</h3>
+            <p>A single optional input added to the tricount creation flow lets users define a group budget before any expenses are logged. It integrates cleanly with the existing form without adding friction.</p>
+            <ul>
+              <li>Added as an optional field in the creation form</li>
+              <li>Compatible with any currency Tricount supports</li>
+              <li>Unlocks the summary section once a limit is set</li>
+              <li>Zero disruption to users who skip it</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Spending summary</h3>
+            <p>A new collapsible section at the top of the tricount detail view gives users a clear picture of their budget status without requiring them to do any mental math.</p>
+            <ul>
+              <li>Shows total spent vs. total limit at a glance</li>
+              <li>Displays remaining budget with a progress indicator</li>
+              <li>Includes a simple timeline of daily expense activity</li>
+              <li>Collapses to stay out of the way when not needed</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Upper Features: Frames 7 - 8 -->
+        <div class="grid-2" style="margin-top: 32px;">
+          <article class="screen">
+            <div class="screen-head"><span>Frame 7</span><span>Summary section</span></div>
+            <img src="image/7.pdf" alt="Tricount frame 7" loading="lazy">
+            <p class="caption">The summary section surfaces budget status at the top of the detail view.</p>
+          </article>
+
+          <article class="screen">
+            <div class="screen-head"><span>Frame 8</span><span>Progress state</span></div>
+            <img src="image/8.pdf" alt="Tricount frame 8" loading="lazy">
+            <p class="caption">A visual progress bar communicates how much of the limit has been used.</p>
+          </article>
+        </div>
+
+        <!-- Lower Features: Frames 9 - 10 -->
+        <div class="grid-2" style="margin-top: 20px;">
+          <article class="screen">
+            <div class="screen-head"><span>Frame 9</span><span>Expense chart</span></div>
+            <img src="image/9.pdf" alt="Tricount frame 9" loading="lazy">
+            <p class="caption">A lightweight daily timeline helps users spot spending patterns at a glance.</p>
+          </article>
+
+          <article class="screen">
+            <div class="screen-head"><span>Frame 10</span><span>Full overview</span></div>
+            <img src="image/10.pdf" alt="Tricount frame 10" loading="lazy">
+            <p class="caption">The complete redesigned view combining the summary section with the existing expense feed.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: DESIGN PROCESS ROADMAP -->
+    <section class="section" id="process">
+      <div class="container two-col">
+        <div>
+          <div class="eyebrow">05 — Process</div>
+          <h2>How the concept was shaped</h2>
+        </div>
+        <div class="process-list">
+          <div class="process-item">
+            <strong>01 — Review analysis</strong>
+            <p>I read through App Store reviews for Tricount and competing expense apps to find recurring frustrations. Budget awareness and lack of spending feedback appeared consistently across user comments.</p>
+          </div>
+          <div class="process-item">
+            <strong>02 — Gap analysis</strong>
+            <p>Mapping Tricount's current feature set against what users expressed needing made the gap clear: the app tracks what was spent but provides no context for whether that amount is within any kind of plan.</p>
+          </div>
+          <div class="process-item">
+            <strong>03 — Competitor observation</strong>
+            <p>Apps like Splitwise and Spendee handle group budgets and spending summaries in different ways. Observing their approaches helped me define what a minimal, non-intrusive version of this feature could look like inside Tricount.</p>
+          </div>
+          <div class="process-item">
+            <strong>04 — Concept &amp; wireframing</strong>
+            <p>I sketched how the spend limit input and summary section could sit inside the existing flow before moving into Figma. The priority was making both additions feel like they had always been there, not like bolt-ons.</p>
+          </div>
+          <div class="process-item">
+            <strong>05 — Figma prototyping</strong>
+            <p>The 10 portfolio frames were built in Figma using Tricount's existing visual language — same type scale, same component rhythm — so the new screens integrate seamlessly with the original app design.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- RECONCILED ACCREDITATIONS -->
+  <footer class="container footer-note">
+    <p>UX/UI case study — Tricount iOS feature enhancement &nbsp;·&nbsp; Personal project, 2025–2026.</p>
+  </footer>
+
+  <!-- ===================== INTERACTIVE SYSTEM LOGIC ===================== -->
+  <script>
+    // 1. Mobile Menu Toggler
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    if (menuToggle && mobileMenu) {
+      menuToggle.addEventListener('click', () => {
+        menuToggle.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+      });
+
+      // Close menu when clicking any mobile links
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          menuToggle.classList.remove('active');
+          mobileMenu.classList.remove('active');
+        });
+      });
+    }
+
+    // 2. Active Link Scroll Highlighter
+    const sections = ['top', 'overview', 'screens', 'features', 'process'];
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    window.addEventListener('scroll', () => {
+      let currentSection = 'top';
+      const scrollPosition = window.scrollY + 150;
+
+      sections.forEach(sec => {
+        const el = document.getElementById(sec === 'top' ? 'hero-sec' : sec);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            currentSection = sec;
+          }
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${currentSection}`) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // 3. Premium Smooth Lerping Custom Cursor
+    const dot = document.querySelector('.cursor-dot');
+    const ring = document.querySelector('.cursor-ring');
+
+    if (dot && ring) {
+      let mX = 0, mY = 0;   // Target cursor coordinates
+      let dX = 0, dY = 0;   // Dot coordinates (fast lerp)
+      let rX = 0, rY = 0;   // Ring coordinates (delayed lerp)
+      let initialized = false;
+
+      const lerp = (start, end, amt) => start + (end - start) * amt;
+
+      const tick = () => {
+        dX = lerp(dX, mX, 0.32);
+        dY = lerp(dY, mY, 0.32);
+        rX = lerp(rX, mX, 0.09);
+        rY = lerp(rY, mY, 0.09);
+
+        dot.style.transform = `translate3d(${dX}px, ${dY}px, 0)`;
+        ring.style.transform = `translate3d(${rX}px, ${rY}px, 0)`;
+        requestAnimationFrame(tick);
+      };
+
+      document.addEventListener('mousemove', (e) => {
+        mX = e.clientX;
+        mY = e.clientY;
+
+        if (!initialized) {
+          dX = mX; dY = mY;
+          rX = mX; rY = mY;
+          initialized = true;
+          document.body.classList.add('cursor-ready');
+        }
+
+        // Adaptive Cursor Color Engine: detect if hovering over dark components
+        const element = document.elementFromPoint(mX, mY);
+        const darkParent = element ? element.closest('nav, .mobile-menu, .screen, .dark-card, footer') : null;
+
+        if (darkParent) {
+          dot.style.backgroundColor = '#f5f3ef';
+          ring.style.borderColor = '#f5f3ef';
+        } else {
+          dot.style.backgroundColor = '#0a0a0a';
+          ring.style.borderColor = '#0a0a0a';
+        }
+      });
+
+      document.addEventListener('mouseleave', () => {
+        document.body.classList.remove('cursor-ready');
+        initialized = false;
+      });
+
+      document.addEventListener('mouseenter', () => {
+        document.body.classList.add('cursor-ready');
+      });
+
+      // Hover enlargement on interactive elements
+      const interactives = 'a, button, .screen, .card';
+      document.querySelectorAll(interactives).forEach(el => {
+        el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+        el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+      });
+
+      tick();
+    }
+  </script>
+</body>
+</html>
